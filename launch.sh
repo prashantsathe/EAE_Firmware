@@ -44,7 +44,7 @@ echo "Build Successful. Launching Firmware..."
 echo "-----------------------------------------------"
 
 # Use .exe extension for Windows/MSYS2 compatibility
-#./firmware_app.exe $SETPOINT
+./firmware_app.exe $SETPOINT
 
 
 echo ""
