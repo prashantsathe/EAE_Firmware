@@ -1,0 +1,41 @@
+cmake_minimum_required(VERSION 3.14)
+
+project(EAE_Firmware)
+
+set(CMAKE_CXX_STANDARD 17)
+
+#====================================================
+# Main Firmware Executable
+#====================================================
+include_directories(src)
+
+add_executable(firmware_app
+    src/main.cpp
+    src/pid.cpp
+    src/canbus.cpp
+)
+
+#====================================================
+# GoogleTest
+#====================================================
+include(FetchContent)
+FetchContent_Declare(
+  googletest
+  URL https://github.com/google/googletest/archive/refs/heads/main.zip
+)
+# For Windows/MSYS2: prevents GTest from overriding compiler settings
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
+
+# --- Unit Testing Binary ---
+# This creates a second app just for running your tests
+add_executable(run_tests
+    tests/test_main.cpp
+    src/Pid.cpp
+    src/Canbus.cpp
+)
+
+target_link_libraries(run_tests GTest::gtest_main)
+
+# --- Static Linking ---
+set(CMAKE_EXE_LINKER_FLAGS "-static")
